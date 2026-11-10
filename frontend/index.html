@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PetalPass</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--ink:#1c1c1e;--mute:#6b6b70;--line:#e4e4e7;--tint:#fdf2f8;--pink:#ec4899;--pinkink:#be185d;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141415;--ink:#f4f4f5;--mute:#a1a1a8;--line:#2e2e32;--tint:#26141e;--pinkink:#f472b6;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141415;--ink:#f4f4f5;--mute:#a1a1a8;--line:#2e2e32;--tint:#26141e;--pinkink:#f472b6;color-scheme:dark}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Hanken Grotesk",system-ui,sans-serif}
+h1,h2,h3{font-family:Newsreader,Georgia,serif;font-weight:400;line-height:1.08;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(2.8rem,8vw,6rem)}h2{font-size:clamp(1.9rem,4vw,2.8rem)}h3{font-size:1.5rem}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+nav{border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.logo{font-family:Newsreader,Georgia,serif;font-size:1.5rem;text-decoration:none;color:var(--ink)}
+.logo i{color:var(--pink);font-style:normal}
+.links{display:flex;gap:22px;align-items:center;flex-wrap:wrap;font-size:.95rem}
+.links a{text-decoration:none;color:var(--mute)}.links a:hover,.links a.on{color:var(--ink)}
+button,.btn{font:inherit;font-weight:500;border:1px solid var(--ink);background:var(--ink);color:var(--bg);padding:11px 22px;border-radius:0;cursor:pointer;text-decoration:none;display:inline-block}
+button.alt,.btn.alt{background:transparent;color:var(--ink)}
+button.pink{background:var(--pink);border-color:var(--pink);color:#fff}
+button:disabled{opacity:.45;cursor:default}
+button.sm{padding:6px 12px;font-size:.88rem}
+:focus-visible{outline:2px solid var(--pink);outline-offset:2px}
+section{padding:88px 0;border-bottom:1px solid var(--line)}
+section.last{border-bottom:0}
+.hero{display:grid;grid-template-columns:1.15fr 1fr;gap:56px;align-items:center}
+.hero p{font-size:1.15rem;color:var(--mute);max-width:44ch;margin:24px 0 32px}
+.art{aspect-ratio:4/5;background:var(--tint);border:1px solid var(--line);display:grid;place-items:center}
+.art svg{width:62%;height:auto}
+.head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:40px;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:32px}
+.card{display:flex;flex-direction:column;gap:12px;text-decoration:none;cursor:pointer}
+.card .art{aspect-ratio:3/2}.card .art svg{width:28%}
+.card:hover h3{color:var(--pinkink)}
+.meta{color:var(--mute);font-size:.92rem}
+.tag{color:var(--pinkink);font-size:.88rem;font-weight:500}
+.bar{height:6px;background:var(--line);margin-top:6px}.bar b{display:block;height:100%;background:var(--pink)}
+.tools{display:flex;gap:12px;flex-wrap:wrap;margin:32px 0 40px}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:0;padding:11px 14px;min-width:0}
+input.s{flex:1;min-width:220px}
+.chip{background:transparent;color:var(--mute);border-color:var(--line);padding:8px 16px}
+.chip.on{background:var(--tint);color:var(--pinkink);border-color:var(--pink)}
+.split{display:grid;grid-template-columns:1.3fr 1fr;gap:56px}
+.panel{border:1px solid var(--line);padding:28px;align-self:start}
+.row{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:18px 0;border-top:1px solid var(--line);flex-wrap:wrap}
+form{display:grid;gap:14px}label{display:grid;gap:6px;font-size:.92rem;color:var(--mute)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:24px;margin-bottom:48px}
+.stat{border-top:2px solid var(--pink);padding-top:12px}.stat b{font:400 2.4rem Newsreader,Georgia,serif;display:block}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 22px;z-index:9}
+footer{padding:48px 0;color:var(--mute);font-size:.92rem}
+@media(max-width:820px){.hero,.split{grid-template-columns:1fr;gap:32px}section{padding:56px 0}.art{aspect-ratio:3/2}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<nav><div class="wrap"><a class="logo" href="#home"><i>✿</i> PetalPass</a><div class="links" id="links"></div></div></nav>
+<main id="app"></main>
+<footer><div class="wrap">PetalPass · Campus event registration. Built with Express and MySQL.</div></footer>
+<script>
+const CATS=["Tech","Culture","Sports","Workshop"];
+const api=async(p,o)=>{const r=await fetch("/api"+p,o&&{method:o.m,headers:{"Content-Type":"application/json"},body:JSON.stringify(o.b)});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||"Something went wrong");return j};
+let S={events:[],regs:[],user:null};
+try{S.user=JSON.parse(localStorage.getItem("ppu"))}catch(e){}
+async function refresh(){try{S.events=await api("/events");S.regs=S.user?await api("/registrations?userId="+S.user.id):[]}catch(e){toast(e.message)}render()}
+const $=s=>document.querySelector(s),esc=t=>String(t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const petal='<svg viewBox="0 0 100 100" aria-hidden="true"><g fill="#ec4899" fill-opacity=".85">'+[0,72,144,216,288].map(a=>`<ellipse cx="50" cy="26" rx="13" ry="24" transform="rotate(${a} 50 50)"/>`).join("")+'</g><circle cx="50" cy="50" r="7" fill="#fff"/></svg>';
+const fmt=d=>new Date(d+"T00:00").toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"});
+const count=e=>e.taken;
+const left=e=>Math.max(0,e.cap-count(e));
+const isAdmin=()=>S.user&&S.user.role==="admin";
+const mine=()=>S.regs;
+let q="",cat="All";
+function toast(m){const t=document.createElement("div");t.className="toast";t.setAttribute("role","status");t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),2400)}
+function card(e){const l=left(e);return `<a class="card" href="#event-${e.id}"><div class="art">${petal}</div><span class="tag">${esc(e.cat)}</span><h3>${esc(e.title)}</h3><span class="meta">${fmt(e.date)} · ${esc(e.venue)}</span><div><span class="meta">${l?l+" seats left":"Full, waitlist open"}</span><div class="bar"><b style="width:${Math.min(100,count(e)/e.cap*100)}%"></b></div></div></a>`}
+const sorted=()=>[...S.events].sort((a,b)=>a.date.localeCompare(b.date));
+function home(){const f=sorted()[0];return `<section><div class="wrap hero"><div><h1>Campus events, beautifully organized.</h1><p>Find what’s on, reserve your seat in a few taps, and keep every registration in one place.</p><a class="btn pink" href="#events">Browse events</a></div><div class="art">${petal}</div></div></section>
+${f?`<section class="last"><div class="wrap"><div class="head"><h2>Up next</h2><a href="#events">All events</a></div><div class="split"><div><span class="tag">${esc(f.cat)}</span><h3 style="font-size:2.4rem;margin:8px 0 16px">${esc(f.title)}</h3><p class="meta">${fmt(f.date)} at ${f.time} · ${esc(f.venue)}</p><p>${esc(f.desc)}</p><a class="btn" href="#event-${f.id}">View event</a></div><div class="art" style="aspect-ratio:4/3">${petal}</div></div></div></section>`:""}`}
+function events(){const list=sorted().filter(e=>(cat==="All"||e.cat===cat)&&(e.title+e.venue).toLowerCase().includes(q.toLowerCase()));
+return `<section class="last"><div class="wrap"><h2>Events</h2><div class="tools"><input class="s" id="q" placeholder="Search by name or venue" value="${esc(q)}" aria-label="Search events">${["All",...CATS].map(c=>`<button class="chip ${c===cat?"on":""}" data-cat="${c}">${c}</button>`).join("")}</div><div class="grid">${list.map(card).join("")||'<p class="meta">No events match. Try a different search or category.</p>'}</div></div></section>`}
+function detail(id){const e=S.events.find(x=>String(x.id)===id);if(!e)return `<section class="last"><div class="wrap"><h2>Event not found</h2><p><a href="#events">Back to events</a></p></div></section>`;
+const r=mine().find(x=>String(x.eventId)===id),l=left(e);
+let act;if(!S.user)act=`<a class="btn pink" href="#login">Sign in to register</a>`;
+else if(r)act=`<p><b>${r.status==="confirmed"?"You’re registered.":"You’re on the waitlist."}</b></p><button class="alt" data-cancel="${e.id}">Cancel registration</button>`;
+else act=`<button class="pink" data-reg="${e.id}">${l?"Register":"Join waitlist"}</button>`;
+return `<section class="last"><div class="wrap"><p><a href="#events">← Events</a></p><div class="split"><div><span class="tag">${esc(e.cat)}</span><h1 style="font-size:clamp(2.4rem,6vw,4.2rem);margin:8px 0 24px">${esc(e.title)}</h1><div class="art" style="aspect-ratio:16/9;margin-bottom:24px">${petal}</div><p>${esc(e.desc)}</p><div id="sim" style="margin-top:48px"></div></div><div class="panel"><p class="meta" style="margin-top:0">${fmt(e.date)} at ${e.time}<br>${esc(e.venue)}</p><p><b>${count(e)}</b> of ${e.cap} seats taken</p><div class="bar" style="margin:0 0 24px"><b style="width:${Math.min(100,count(e)/e.cap*100)}%"></b></div>${act}</div></div></div></section>`}
+function login(){return `<section class="last"><div class="wrap" style="max-width:460px"><h2>Sign in</h2><p class="meta">Use admin@petalpass.edu to see the admin view.</p><form id="lf"><label>Name<input name="n" required></label><label>Email<input name="e" type="email" required></label><button class="pink">Sign in</button></form></div></section>`}
+function myregs(){if(!S.user)return login();const m=mine();
+return `<section class="last"><div class="wrap"><h2>My registrations</h2><div style="margin-top:32px">${m.map(r=>{const e=S.events.find(x=>x.id===r.eventId);return e?`<div class="row"><div><a href="#event-${e.id}"><h3>${esc(e.title)}</h3></a><span class="meta">${fmt(e.date)} · ${esc(e.venue)}</span></div><div><span class="tag">${r.status==="confirmed"?"Confirmed":"Waitlisted"}</span> <button class="alt sm" data-cancel="${e.id}">Cancel</button></div></div>`:""}).join("")||'<p class="meta">Nothing yet. <a href="#events">Find an event</a> to register for.</p>'}</div></div></section>`}
+function admin(){if(!isAdmin())return `<section class="last"><div class="wrap"><h2>Admin</h2><p class="meta">Sign in as admin@petalpass.edu to manage events.</p><a class="btn" href="#login">Sign in</a></div></section>`;
+const tot=S.events.reduce((a,e)=>a+count(e),0),cap=S.events.reduce((a,e)=>a+e.cap,0);
+return `<section class="last"><div class="wrap"><h2>Admin</h2><div class="stats" style="margin-top:32px"><div class="stat"><b>${S.events.length}</b>Events</div><div class="stat"><b>${tot}</b>Registrations</div><div class="stat"><b>${cap?Math.round(tot/cap*100):0}%</b>Seats filled</div></div>
+<div class="split"><div>${sorted().map(e=>`<div class="row"><div style="flex:1;min-width:200px"><b>${esc(e.title)}</b><div class="meta">${fmt(e.date)} · ${count(e)}/${e.cap}</div><div class="bar"><b style="width:${Math.min(100,count(e)/e.cap*100)}%"></b></div></div><button class="alt sm" data-del="${e.id}">Delete</button></div>`).join("")}</div>
+<form class="panel" id="af"><h3>Add event</h3><label>Title<input name="t" required></label><label>Category<select name="c">${CATS.map(c=>`<option>${c}</option>`).join("")}</select></label><label>Date<input name="d" type="date" required></label><label>Time<input name="h" type="time" value="10:00" required></label><label>Venue<input name="v" required></label><label>Capacity<input name="k" type="number" min="1" value="50" required></label><label>Description<textarea name="x" rows="3"></textarea></label><button class="pink">Add event</button></form></div></div></section>`}
+function render(){const h=location.hash.slice(1)||"home";
+$("#links").innerHTML=[["home","Home"],["events","Events"],["mine","My registrations"],...(isAdmin()?[["admin","Admin"]]:[])].map(([k,t])=>`<a href="#${k}" class="${h===k?"on":""}">${t}</a>`).join("")+(S.user?`<a href="#" data-out>Sign out</a>`:`<a href="#login">Sign in</a>`);
+$("#app").innerHTML=h.startsWith("event-")?detail(h.slice(6)):({home,events,mine:myregs,login,admin}[h]||home)();
+if(h.startsWith("event-"))api("/events/"+h.slice(6)+"/similar").then(r=>{const el=$("#sim");if(el&&r.length)el.innerHTML="<h3>Similar events</h3>"+r.map(x=>`<div class="row"><a href="#event-${x.id}">${esc(x.title)}</a><span class="meta">${Math.round(x.score*100)}% match</span></div>`).join("")}).catch(()=>{});
+const qi=$("#q");if(qi){qi.oninput=()=>{q=qi.value;const p=qi.selectionStart;render();const n=$("#q");n.focus();n.setSelectionRange(p,p)}}}
+document.addEventListener("click",async ev=>{const b=ev.target.closest("[data-cat],[data-reg],[data-cancel],[data-del],[data-out]");if(!b)return;const d=b.dataset;
+try{
+if(d.cat){cat=d.cat;render();return}
+if(d.reg){const r=await api("/register",{m:"POST",b:{userId:S.user.id,eventId:+d.reg}});toast(r.status==="confirmed"?"Registered":"Added to waitlist")}
+else if(d.cancel){await api("/cancel",{m:"POST",b:{userId:S.user.id,eventId:+d.cancel}});toast("Registration cancelled")}
+else if(d.del){await api("/events/"+d.del+"?userId="+S.user.id,{m:"DELETE"});toast("Event deleted")}
+else{ev.preventDefault();S.user=null;localStorage.removeItem("ppu");location.hash="home"}
+}catch(e){toast(e.message)}
+await refresh()});
+document.addEventListener("submit",async ev=>{ev.preventDefault();const f=new FormData(ev.target);
+try{
+if(ev.target.id==="lf"){S.user=await api("/login",{m:"POST",b:{name:f.get("n"),email:f.get("e")}});localStorage.setItem("ppu",JSON.stringify(S.user));location.hash="mine"}
+else{await api("/events",{m:"POST",b:{userId:S.user.id,title:f.get("t"),category:f.get("c"),date:f.get("d"),time:f.get("h"),venue:f.get("v"),capacity:+f.get("k"),description:f.get("x")}});toast("Event added")}
+}catch(e){toast(e.message)}
+await refresh()});
+window.addEventListener("hashchange",()=>{render();scrollTo(0,0)});
+refresh();
+</script>
+</body>
+</html>
